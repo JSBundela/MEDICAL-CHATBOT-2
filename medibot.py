@@ -5,6 +5,9 @@ from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import PromptTemplate
 
+HF_TOKEN = st.secrets["HF_TOKEN"]
+
+
 
 # ----------------------------
 # Configuration
