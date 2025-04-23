@@ -1,6 +1,6 @@
 
 
-```markdown
+
 # 🩺 Medical Chatbot using LangChain, FAISS & HuggingFace
 
 This project is a **Streamlit-based medical question-answering chatbot** powered by:
@@ -120,5 +120,3 @@ MIT License © 2025 [Your Name]
 
 
 
-
-Let me know if you want this customized with your actual GitHub username, project title, or any more sections like video demo, deployment instructions, etc.
