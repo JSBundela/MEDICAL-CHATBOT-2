@@ -1,0 +1,9 @@
+langchain
+langchain-core
+langchain-community
+langchain-huggingface
+faiss-cpu
+pypdf
+transformers
+tf-keras  # compatibility shim for Keras 3
+sentence-transformers
