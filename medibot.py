@@ -4,7 +4,7 @@ from langchain_huggingface import HuggingFaceEmbeddings, HuggingFaceEndpoint
 from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import PromptTemplate
-from huggingface_hub import InferenceClient
+
 
 # ----------------------------
 # Configuration
@@ -30,7 +30,8 @@ def load_llm(repo_id: str, token: str):
         repo_id=repo_id,
         temperature=0.5,
         task="text-generation",
-        model_kwargs={"token": token, "max_length": 512},
+        huggingfacehub_api_token=token,  
+        model_kwargs={"max_length": 512}
     )
 
 
