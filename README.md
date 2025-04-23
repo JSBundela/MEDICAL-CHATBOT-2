@@ -1,6 +1,4 @@
-Sure! Here's a professional and comprehensive `README.md` file tailored for your medical chatbot project using Streamlit, LangChain, FAISS, and HuggingFace models:
 
----
 
 ```markdown
 # 🩺 Medical Chatbot using LangChain, FAISS & HuggingFace
