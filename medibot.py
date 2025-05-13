@@ -37,7 +37,8 @@ def load_llm(repo_id: str, token: str):
     return HuggingFaceEndpoint(
         repo_id=repo_id,
         temperature=0.5,
-        task="text-generation",
+        #task="text-generation",
+        task="conversational",
         huggingfacehub_api_token=token,
         max_new_tokens=512
         #model_kwargs={"max_length": 512}
