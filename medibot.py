@@ -14,7 +14,8 @@ HF_TOKEN = st.secrets["HF_TOKEN"]
 # Configuration
 # ----------------------------
 DB_FAISS_PATH = "vectorstore/db_faiss"
-HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
+#HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
+HUGGINGFACE_REPO_ID ="tiiuae/falcon-7b-instruct"
 HF_TOKEN = os.environ.get("HF_TOKEN")
 
 # ----------------------------
@@ -33,12 +34,12 @@ def load_llm(repo_id: str, token: str):
     """Return a HuggingFace endpoint with sensible defaults."""
     from langchain_huggingface import HuggingFaceEndpoint 
     return HuggingFaceEndpoint(
-        model=repo_id,
+        repo_id=repo_id,
         temperature=0.5,
-        task="conversational",
+        task="text-generation",
         huggingfacehub_api_token=token,
-        max_new_tokens=512
-        #model_kwargs={"max_length": 512}
+        #max_new_tokens=512
+        model_kwargs={"max_length": 512}
         #model_kwargs={"max_new_tokens": 512} 
     )
 
@@ -83,28 +84,23 @@ with st.sidebar:
                 st.session_state.chat_history.append({"role": "user", "content": user_input})
 
                 # 2️⃣  Build QA chain
-                #vectorstore = get_vectorstore()
 
-                from langchain.chains import ConversationalRetrievalChain
-
-                # 2️⃣ Build QA chain
                 vectorstore = get_vectorstore()
-                qa_chain = ConversationalRetrievalChain.from_llm(
+                qa_chain = RetrievalQA.from_chain_type(
                     llm=load_llm(HUGGINGFACE_REPO_ID, HF_TOKEN),
+                    chain_type="stuff",
                     retriever=vectorstore.as_retriever(search_kwargs={"k": 4}),
                     return_source_documents=True,
-                    combine_docs_chain_kwargs={"prompt": build_prompt()},
+                    chain_type_kwargs={"prompt": build_prompt()},
                 )
 
                
+                
+               
 
                 # 3️⃣  Run chain
-                #resp = qa_chain.invoke({"query": user_input})
-                # Run with both keys
-                resp = qa_chain({
-                    "question": user_input,
-                    "chat_history": st.session_state.chat_history[:-1]  # exclude the blank assistant turn
-                })
+            
+                resp = qa_chain.invoke({"query": user_input})
                 answer = resp.get("result", "")
                 docs = resp.get("source_documents", [])
 
