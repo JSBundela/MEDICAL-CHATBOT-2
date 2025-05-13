@@ -83,14 +83,26 @@ with st.sidebar:
                 st.session_state.chat_history.append({"role": "user", "content": user_input})
 
                 # 2️⃣  Build QA chain
+                #vectorstore = get_vectorstore()
+
+                from langchain.chains import ConversationalRetrievalChain
+
+                # 2️⃣ Build QA chain
                 vectorstore = get_vectorstore()
-                qa_chain = RetrievalQA.from_chain_type(
+                qa_chain = ConversationalRetrievalChain.from_llm(
+                    llm=load_llm(HUGGINGFACE_REPO_ID, HF_TOKEN),
+                    retriever=vectorstore.as_retriever(search_kwargs={"k": 4}),
+                    return_source_documents=True,
+                    combine_docs_chain_kwargs={"prompt": build_prompt()},
+                )
+
+                """qa_chain = RetrievalQA.from_chain_type(
                     llm=load_llm(HUGGINGFACE_REPO_ID, HF_TOKEN),
                     chain_type="stuff",
                     retriever=vectorstore.as_retriever(search_kwargs={"k": 4}),
                     return_source_documents=True,
                     chain_type_kwargs={"prompt": build_prompt()},
-                )
+                )"""
 
                 # 3️⃣  Run chain
                 resp = qa_chain.invoke({"query": user_input})
