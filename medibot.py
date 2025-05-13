@@ -38,8 +38,8 @@ def load_llm(repo_id: str, token: str):
         task="text-generation",
         huggingfacehub_api_token=token,
         #max_new_tokens=512
-        model_kwargs={"max_length": 512},
-        #model_kwargs={"max_new_tokens": 512} 
+        #model_kwargs={"max_length": 512},
+        model_kwargs={"max_new_tokens": 512} 
     )
 
 
