@@ -31,7 +31,7 @@ def get_vectorstore():
 def load_llm(repo_id: str, token: str):
     """Return a HuggingFace endpoint with sensible defaults."""
     return HuggingFaceEndpoint(
-        repo_id=repo_id,
+        model=repo_id,
         temperature=0.5,
         task="conversational",
         huggingfacehub_api_token=token,
