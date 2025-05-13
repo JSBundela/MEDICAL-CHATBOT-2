@@ -1,6 +1,7 @@
 import os
 import streamlit as st
 from langchain_huggingface import HuggingFaceEmbeddings, HuggingFaceEndpoint
+from huggingface_hub import InferenceClient
 from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import PromptTemplate
@@ -29,7 +30,7 @@ def get_vectorstore():
 
 def load_llm(repo_id: str, token: str):
     """Return a HuggingFace endpoint with sensible defaults."""
-    return HuggingFaceEndpoint(
+    return InferenceClient(
         repo_id=repo_id,
         temperature=0.5,
         task="conversational",
