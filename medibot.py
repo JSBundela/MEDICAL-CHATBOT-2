@@ -35,7 +35,7 @@ def load_endpoint(repo_id: str, token: str):
     """Return a HuggingFace endpoint with sensible defaults."""
     from langchain_huggingface import HuggingFaceEndpoint 
     return HuggingFaceEndpoint(
-        model_name=repo_id, 
+        model=repo_id, 
         #repo_id=repo_id,
         temperature=0.5,
         #task="text-generation",
