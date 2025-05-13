@@ -1,7 +1,6 @@
 import os
 import streamlit as st
 from langchain_huggingface import HuggingFaceEmbeddings, HuggingFaceEndpoint
-#from langchain_community.llms import HuggingFaceHub
 from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import PromptTemplate
@@ -14,9 +13,9 @@ HF_TOKEN = st.secrets["HF_TOKEN"]
 # Configuration
 # ----------------------------
 DB_FAISS_PATH = "vectorstore/db_faiss"
-#HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
+HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
 #HUGGINGFACE_REPO_ID ="tiiuae/falcon-7b-instruct"
-HUGGINGFACE_REPO_ID ="meta-llama/Llama-2-7b-chat-hf"
+#HUGGINGFACE_REPO_ID ="meta-llama/Llama-2-7b-chat-hf"
 
 HF_TOKEN = os.environ.get("HF_TOKEN")
 
@@ -26,7 +25,7 @@ HF_TOKEN = os.environ.get("HF_TOKEN")
 
 def get_vectorstore():
     """Load the FAISS vector store with the sentence‑transformer embedding model."""
-    from langchain_huggingface import HuggingFaceEndpoint 
+
     embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     db = FAISS.load_local(DB_FAISS_PATH, embedding_model, allow_dangerous_deserialization=True)
     return db
@@ -34,14 +33,14 @@ def get_vectorstore():
 
 def load_llm(repo_id: str, token: str):
     """Return a HuggingFace endpoint with sensible defaults."""
-    from langchain_huggingface import HuggingFaceEndpoint 
+
     return HuggingFaceEndpoint(
         repo_id=repo_id,
         temperature=0.5,
         task="text-generation",
         huggingfacehub_api_token=token,
-        max_new_tokens=512
-        #model_kwargs={"max_length": 512}
+        #max_new_tokens=512
+        model_kwargs={"max_length": 512}
         #model_kwargs={"max_new_tokens": 512} 
     )
 
@@ -95,10 +94,6 @@ with st.sidebar:
                     return_source_documents=True,
                     chain_type_kwargs={"prompt": build_prompt()},
                 )
-
-               
-                
-               
 
                 # 3️⃣  Run chain
             
