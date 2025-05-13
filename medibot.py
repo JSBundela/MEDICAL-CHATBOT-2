@@ -25,7 +25,7 @@ HF_TOKEN = os.environ.get("HF_TOKEN")
 
 def get_vectorstore():
     """Load the FAISS vector store with the sentence‑transformer embedding model."""
-
+    from langchain_huggingface import HuggingFaceEndpoint 
     embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     db = FAISS.load_local(DB_FAISS_PATH, embedding_model, allow_dangerous_deserialization=True)
     return db
@@ -33,7 +33,7 @@ def get_vectorstore():
 
 def load_llm(repo_id: str, token: str):
     """Return a HuggingFace endpoint with sensible defaults."""
-
+    from langchain_huggingface import HuggingFaceEndpoint 
     return HuggingFaceEndpoint(
         repo_id=repo_id,
         temperature=0.5,
