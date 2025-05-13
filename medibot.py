@@ -99,7 +99,12 @@ with st.sidebar:
                
 
                 # 3️⃣  Run chain
-                resp = qa_chain.invoke({"query": user_input})
+                #resp = qa_chain.invoke({"query": user_input})
+                # Run with both keys
+                resp = qa_chain({
+                    "question": user_input,
+                    "chat_history": st.session_state.chat_history[:-1]  # exclude the blank assistant turn
+                })
                 answer = resp.get("result", "")
                 docs = resp.get("source_documents", [])
 
