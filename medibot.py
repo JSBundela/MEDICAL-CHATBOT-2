@@ -36,6 +36,12 @@ except Exception:
     st.error("sentence_transformers import FAILED — traceback below")
     st.code(traceback.format_exc())
 
+from huggingface_hub import InferenceClient
+
+client = InferenceClient(token=HF_TOKEN)   # uses Hugging Face inference API
+resp = client.chat(model="mistralai/Mistral-7B-Instruct-v0.3",  # ensure this model is available on HF
+                   messages=[{"role":"user","content":"Hello"}])
+print(resp)
 
 
 # ----------------------------
