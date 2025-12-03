@@ -82,6 +82,8 @@ def load_endpoint(repo_id: str, token: str):
     #return ChatHuggingFace(llm=endpoint)
 from langchain import HuggingFaceHub
 
+from langchain import HuggingFaceHub
+
 def load_llm(repo_id: str, token: str):
     return HuggingFaceHub(
         repo_id=repo_id,
