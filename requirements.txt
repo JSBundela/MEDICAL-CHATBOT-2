@@ -1,25 +1,25 @@
 # UI
 streamlit==1.31.1
 
-# LangChain pre-v1 family (compatible set)
+# --- Pre-v1 LangChain family (consistent 0.3.x set)
 langchain==0.3.27
 langchain-core==0.3.80
 langchain-community==0.3.31
 
-# HuggingFace integration matching classic usage
-langchain-huggingface==1.1.0
+# --- Hugging Face integration (pre-v1 matching line)
+langchain-huggingface==0.3.1
 
-# Vector DB (a broadly available faiss wheel for py3.11)
+# --- Vector DB (faiss wheel compatible with py3.10/py3.11)
 faiss-cpu==1.13.0
 
-# PDF loader
+# --- PDF loader
 pypdf==4.0.1
 
-# Transformers & sentence embeddings
+# --- Transformers & sentence embeddings
 transformers==4.37.2
 sentence-transformers==2.2.2
 
-# Keras 3 compatibility shim
+# --- Keras 3 compatibility shim
 tf-keras==2.17.0
 
 
