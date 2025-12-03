@@ -28,6 +28,15 @@ HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
 st.write("HF_TOKEN present?", bool(HF_TOKEN))
 st.write("HUGGINGFACE_REPO_ID:", HUGGINGFACE_REPO_ID)
 
+endpoint = load_endpoint(HUGGINGFACE_REPO_ID, HF_TOKEN)
+st.write("endpoint repr:", repr(endpoint))
+# if available
+try:
+    st.write("endpoint.__dict__:", endpoint.__dict__)
+except Exception:
+    pass
+
+
 def get_vectorstore():
     """Load the FAISS vector store with the sentence‑transformer embedding model."""
     from langchain_huggingface import HuggingFaceEndpoint 
