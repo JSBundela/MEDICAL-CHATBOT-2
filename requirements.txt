@@ -1,26 +1,30 @@
+# UI
 streamlit==1.31.1
 
-# ---- LangChain (pre-v1 family, compatible with your code)
-langchain==0.1.17
-langchain-core==0.1.52
-langchain-community==0.0.28
+# --- Pre-v1 LangChain family (consistent 0.3.x set)
+langchain==0.3.27
+langchain-core==0.3.80
+langchain-community==0.3.31
 
-# ---- HuggingFace integration (old API compatible with LC 0.1.x)
-langchain-huggingface==0.0.7
+# --- Hugging Face integration (pre-v1 matching line)
+langchain-huggingface==0.3.1
 
-# ---- Vector store
-faiss-cpu==1.7.4
+# --- Tokenizers (ensure compatible >=0.19)
+tokenizers==0.19.1
 
-# ---- Transformers + SBERT (stable, known-to-work versions)
-transformers==4.30.2
+# --- Transformers (must be >=4.41 for tokenizers>=0.19 compatibility)
+transformers==4.41.0
+
+# --- Sentence Transformers (compatible with transformers>=4.41)
 sentence-transformers==2.2.2
-tokenizers==0.13.3
 
-# ---- PDF
+# --- Vector DB (faiss wheel compatible with py3.10/py3.11)
+faiss-cpu==1.13.0
+
+# --- PDF loader
 pypdf==4.0.1
 
-# ---- Keras shim
+# --- Keras 3 compatibility shim
 tf-keras==2.17.0
-
 
 
