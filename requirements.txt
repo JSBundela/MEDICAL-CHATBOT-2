@@ -1,35 +1,12 @@
-#streamlit==1.31.1
-
-#langchain
-#langchain-core
-#langchain-community
-#langchain-huggingface
-#faiss-cpu
-#pypdf
-#transformers
-#tf-keras  # compatibility shim for Keras 3
-#sentence-transformers
-# Core
 streamlit==1.31.1
 
-# LangChain (compatible set)
-langchain==0.2.12
-langchain-core==0.2.27
-langchain-community==0.2.10
-langchain-huggingface==0.1.2
-
-# Vector DB
-# Use a faiss-cpu release available on PyPI for Python 3.12
-faiss-cpu==1.13.0
-
-# Embeddings & Transformers
-sentence-transformers==2.6.1
-transformers==4.40.2
-huggingface_hub==0.13.4
-
-# PDF utilities
-pypdf==4.2.0
-
-# Small helpers
-requests==2.32.3
+langchain
+langchain-core
+langchain-community
+langchain-huggingface
+faiss-cpu
+pypdf
+transformers
+tf-keras  # compatibility shim for Keras 3
+sentence-transformers
 
