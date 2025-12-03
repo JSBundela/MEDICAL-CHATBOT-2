@@ -17,6 +17,7 @@ HF_TOKEN = st.secrets.get("HF_TOKEN")
 # ----------------------------
 DB_FAISS_PATH = "vectorstore/db_faiss"
 HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
+mistralai/Mistral-7B-Instruct-v0.3
 #HUGGINGFACE_REPO_ID ="tiiuae/falcon-7b-instruct"
 #HUGGINGFACE_REPO_ID ="meta-llama/Llama-2-7b-chat-hf"
 
@@ -75,9 +76,17 @@ def load_endpoint(repo_id: str, token: str):
         return_full_text=False                  # <- explicit, not inside model_kwargs
     )
 
+#def load_llm(repo_id: str, token: str):
+    #endpoint = load_endpoint(repo_id, token)
+    #return ChatHuggingFace(llm=endpoint)
+from langchain import HuggingFaceHub
+
 def load_llm(repo_id: str, token: str):
-    endpoint = load_endpoint(repo_id, token)
-    return ChatHuggingFace(llm=endpoint)
+    return HuggingFaceHub(
+        repo_id=repo_id,
+        huggingfacehub_api_token=token,
+        model_kwargs={"temperature": 0.2, "max_new_tokens": 512}
+    )
 
 
 def build_prompt() -> PromptTemplate:
