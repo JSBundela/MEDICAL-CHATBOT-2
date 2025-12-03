@@ -10,14 +10,13 @@
 #tf-keras  # compatibility shim for Keras 3
 #sentence-transformers
 
-# Streamlit app
+# App
 streamlit==1.31.1
 
-# LangChain + Hugging Face integration (compatible set)
-langchain==0.3.28
+# LangChain + HuggingFace integration (compatible)
+langchain==0.3.27
 langchain-huggingface==0.1.2
-
-# (optional) langchain-community helpers — loosened to allow resolver flexibility
+# let pip pick a compatible langchain-core / langchain-community:
 langchain-community>=0.3.0
 
 # Vector DB (CPU)
@@ -33,3 +32,4 @@ pypdf==4.2.0
 
 # Utilities
 requests==2.32.3
+
