@@ -1,26 +1,25 @@
+# UI
 streamlit==1.31.1
 
-# --- Classic LangChain API (needed for langchain.chains, RetrievalQA, etc.)
-langchain<1.0.0
-langchain-core<1.0.0
-langchain-community<1.0.0
-langchain-classic==1.0.0
+# LangChain pre-v1 family (old imports like `langchain.chains` exist)
+langchain==0.3.27
+langchain-core==0.3.80
+langchain-community==0.4.1
 
-# --- HuggingFace integration
+# HuggingFace integration that matches classic langchain usage
 langchain-huggingface==1.1.0
 
-# --- Vector DB
-faiss-cpu==1.7.4
+# Vector DB (pick a modern faiss wheel compatible with 3.10/3.11)
+faiss-cpu==1.13.0
 
-# --- PDF loader
+# PDF loader
 pypdf==4.0.1
 
-# --- Transformers + embeddings
+# Transformers & sentence embeddings
 transformers==4.37.2
-sentence-transformers==2.6.1
+sentence-transformers==2.2.2
 
-# --- Keras 3 compatibility shim
+# Keras compatibility shim for Keras 3
 tf-keras==2.17.0
-
 
 
