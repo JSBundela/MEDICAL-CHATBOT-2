@@ -35,8 +35,6 @@ try:
 except Exception:
     st.error("sentence_transformers import FAILED — traceback below")
     st.code(traceback.format_exc())
-from huggingface_hub.utils._errors import HfHubHTTPError
-from huggingface_hub import InferenceClient
 
 
 
