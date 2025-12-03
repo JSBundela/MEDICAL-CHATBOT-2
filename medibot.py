@@ -83,9 +83,9 @@ from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
 #def load_llm(repo_id: str, token: str):
     #endpoint = load_endpoint(repo_id, token)
     #return ChatHuggingFace(llm=endpoint)
-from langchain import HuggingFaceHub
+#from langchain import HuggingFaceHub
+from langchain_community.llms import HuggingFaceHub
 
-from langchain import HuggingFaceHub
 
 def load_llm(repo_id: str, token: str):
     """
