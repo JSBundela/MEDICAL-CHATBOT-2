@@ -88,12 +88,17 @@ from langchain import HuggingFaceHub
 from langchain import HuggingFaceHub
 
 def load_llm(repo_id: str, token: str):
+    """
+    Return a LangChain-compatible HuggingFaceHub LLM wrapper.
+    This MUST be a LangChain LLM wrapper (not raw huggingface clients).
+    """
     return HuggingFaceHub(
         repo_id=repo_id,
         huggingfacehub_api_token=token,
-        task="text-generation",
-        model_kwargs={"temperature": 0.2, "max_new_tokens": 512}
+        task="text-generation",               # explicit task to avoid validation errors
+        model_kwargs={"temperature": 0.2, "max_new_tokens": 512},
     )
+
 
 
 def build_prompt() -> PromptTemplate:
