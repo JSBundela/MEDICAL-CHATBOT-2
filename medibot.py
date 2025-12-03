@@ -42,8 +42,8 @@ except Exception:
 # Configuration
 # ----------------------------
 DB_FAISS_PATH = "vectorstore/db_faiss"
-HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
-#HUGGINGFACE_REPO_ID ="tiiuae/falcon-7b-instruct"
+#HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
+HUGGINGFACE_REPO_ID ="tiiuae/falcon-7b-instruct"
 #HUGGINGFACE_REPO_ID ="meta-llama/Llama-2-7b-chat-hf"
 
 #HF_TOKEN = os.environ.get("HF_TOKEN")
