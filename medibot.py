@@ -20,7 +20,7 @@ DB_FAISS_PATH = "vectorstore/db_faiss"
 #tiiuae/falcon-7b-instruct
 #meta-llama/Llama-2-7b-chat-hf
 
-HUGGINGFACE_REPO_ID ="mistralai/Ministral-3-14B-Instruct-2512"
+HUGGINGFACE_REPO_ID ="mistralai/Mistral-Large-3-675B-Instruct-2512"
 #HUGGINGFACE_REPO_ID ="tiiuae/falcon-7b-instruct"
 #HUGGINGFACE_REPO_ID ="meta-llama/Llama-2-7b-chat-hf"
 
