@@ -38,17 +38,25 @@ except Exception:
 
 from huggingface_hub import InferenceClient
 
-client = InferenceClient(token=HF_TOKEN)   # uses Hugging Face inference API
-resp = client.chat(model="mistralai/Mistral-7B-Instruct-v0.3",  # ensure this model is available on HF
-                   messages=[{"role":"user","content":"Hello"}])
-print(resp)
+client = InferenceClient(token=HF_TOKEN)  # uses HF Inference API
+
+resp = client.chat.completions.create(
+    model="mistralai/Mistral-7B-Instruct-v0.3",
+    messages=[{"role": "user", "content": "Hello"}],
+    max_tokens=256,
+)
+# Response format: resp.choices is a list of choices like OpenAI style
+print(resp)                       # raw
+print(resp.choices[0].message)    # has 'role' and 'content'
+print(resp.choices[0].message.content)  # the text
+
 
 
 # ----------------------------
 # Configuration
 # ----------------------------
 DB_FAISS_PATH = "vectorstore/db_faiss"
-#HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
+HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
 #HUGGINGFACE_REPO_ID ="tiiuae/falcon-7b-instruct"
 #HUGGINGFACE_REPO_ID ="meta-llama/Llama-2-7b-chat-hf"
 
