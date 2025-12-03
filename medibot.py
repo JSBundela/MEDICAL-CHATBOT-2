@@ -35,20 +35,79 @@ try:
 except Exception:
     st.error("sentence_transformers import FAILED — traceback below")
     st.code(traceback.format_exc())
-
+from huggingface_hub.utils._errors import HfHubHTTPError
 from huggingface_hub import InferenceClient
 
-client = InferenceClient(token=HF_TOKEN)  # uses HF Inference API
+client = InferenceClient(token=HF_TOKEN)
 
-resp = client.chat.completions.create(
-    model="mistralai/Mistral-7B-Instruct-v0.3",
-    messages=[{"role": "user", "content": "Hello"}],
-    max_tokens=256,
-)
-# Response format: resp.choices is a list of choices like OpenAI style
-print(resp)                       # raw
-print(resp.choices[0].message)    # has 'role' and 'content'
-print(resp.choices[0].message.content)  # the text
+# Primary model (the one that returned 410)
+PRIMARY_MODEL = "mistralai/Mistral-7B-Instruct-v0.3"
+
+# Fallback candidates — edit this list to models you want to allow
+FALLBACK_MODELS = [
+    "tiiuae/falcon-7b-instruct",
+    "google/flan-t5-large",     # not chat-style but OK for QA
+    "facebook/galactica-1.3b"   # example; ensure availability
+]
+
+def hf_chat_with_fallback(message, primary=PRIMARY_MODEL, fallbacks=FALLBACK_MODELS, max_tokens=512):
+    """Try primary model; on 410 (deprecated) try fallbacks in order."""
+    tried = []
+    # Helper to call the HF chat completion api correctly
+    def call_chat(model_id):
+        tried.append(model_id)
+        # Use chat.completions.create(...) which works for current clients
+        return client.chat.completions.create(
+            model=model_id,
+            messages=[{"role": "user", "content": message}],
+            max_tokens=max_tokens,
+        )
+
+    # Try primary + fallbacks
+    for model in [primary] + list(fallbacks):
+        try:
+            resp = call_chat(model)
+            # extract text robustly depending on response shape
+            # many responses have .choices[0].message.content
+            if hasattr(resp, "choices") and len(resp.choices) > 0:
+                content = getattr(resp.choices[0].message, "content", None)
+                if content:
+                    return {"model": model, "text": content, "raw": resp}
+            # sometimes returns dict-like
+            if isinstance(resp, dict):
+                try:
+                    return {"model": model, "text": resp["choices"][0]["message"]["content"], "raw": resp}
+                except Exception:
+                    return {"model": model, "text": str(resp), "raw": resp}
+            # last fallback
+            return {"model": model, "text": str(resp), "raw": resp}
+        except HfHubHTTPError as hf_err:
+            # Inspect HTTP status code/message (410 -> model deprecated at provider)
+            status = getattr(hf_err, "response", None)
+            msg = str(hf_err)
+            # If it's 410 (Gone) — try next fallback
+            if "410" in msg or "Gone" in msg or "deprecated" in msg.lower():
+                st.warning(f"Model {model} is deprecated/removed on its provider (HTTP 410). Trying next candidate...")
+                continue
+            # For non-410 HF errors, re-raise so it surfaces
+            raise
+        except Exception as e:
+            # Unexpected error (network, auth) — rethrow or surface depending on your policy
+            st.error(f"Error calling model {model}: {e}")
+            raise
+
+    # If we exhausted all candidates
+    raise RuntimeError(f"All candidate models failed. Tried: {tried}")
+
+# Usage example inside your Streamlit flow:
+try:
+    result = hf_chat_with_fallback("Hello, how are you?")
+    st.write("Used model:", result["model"])
+    st.write(result["text"])
+except Exception as e:
+    st.error(f"Model call failed: {e}")
+    # Optionally show full traceback for debug
+    import traceback; st.code(traceback.format_exc())
 
 
 
