@@ -67,17 +67,18 @@ def load_endpoint(repo_id: str, token: str):
     st.write("load_endpoint called with repo_id:", repo_id)
     st.write("token present?", bool(token))
     return HuggingFaceEndpoint(
-        repo_id=repo_id,                        # <- important: pass repo_id explicitly
-        task="text-generation",                 # use text-generation to avoid conversational branching
+        repo_id=repo_id,                       # explicit
+        task="text-generation",                # or "conversational" if model supports it
         huggingfacehub_api_token=token,
         temperature=0.2,
         max_new_tokens=512,
-        model_kwargs={"return_full_text": False}
+        return_full_text=False                  # <- explicit, not inside model_kwargs
     )
 
 def load_llm(repo_id: str, token: str):
     endpoint = load_endpoint(repo_id, token)
     return ChatHuggingFace(llm=endpoint)
+
 
 def build_prompt() -> PromptTemplate:
     template = (
