@@ -38,7 +38,7 @@ def get_vectorstore():
     db = FAISS.load_local(DB_FAISS_PATH, embedding_model, allow_dangerous_deserialization=True)
     return db
 
-def load_endpoint(repo_id: str, token: str):
+"""def load_endpoint(repo_id: str, token: str):
     """Return a HuggingFace endpoint with sensible defaults."""
     from langchain_huggingface import HuggingFaceEndpoint 
     return HuggingFaceEndpoint(
@@ -60,6 +60,24 @@ def load_llm(repo_id: str, token: str):
     return ChatHuggingFace(
         llm=endpoint  # ⚠️ pass the endpoint here
     )
+'''
+from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
+
+def load_endpoint(repo_id: str, token: str):
+    st.write("load_endpoint called with repo_id:", repo_id)
+    st.write("token present?", bool(token))
+    return HuggingFaceEndpoint(
+        repo_id=repo_id,                        # <- important: pass repo_id explicitly
+        task="text-generation",                 # use text-generation to avoid conversational branching
+        huggingfacehub_api_token=token,
+        temperature=0.2,
+        max_new_tokens=512,
+        model_kwargs={"return_full_text": False}
+    )
+
+def load_llm(repo_id: str, token: str):
+    endpoint = load_endpoint(repo_id, token)
+    return ChatHuggingFace(llm=endpoint)
 
 def build_prompt() -> PromptTemplate:
     template = (
