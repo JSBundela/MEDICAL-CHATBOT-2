@@ -1,14 +1,14 @@
-"""streamlit==1.31.1
+#streamlit==1.31.1
 
-langchain
-langchain-core
-langchain-community
-langchain-huggingface
-faiss-cpu
-pypdf
-transformers
-tf-keras  # compatibility shim for Keras 3
-sentence-transformers"""
+#langchain
+#langchain-core
+#langchain-community
+#langchain-huggingface
+#faiss-cpu
+#pypdf
+#transformers
+#tf-keras  # compatibility shim for Keras 3
+#sentence-transformers
 
 # Streamlit app
 streamlit==1.31.1
