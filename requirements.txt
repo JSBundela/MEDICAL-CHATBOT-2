@@ -18,6 +18,8 @@ transformers==4.41.0
 # --- Sentence Transformers (compatible with transformers>=4.41)
 sentence-transformers==2.2.2
 
+huggingface-hub==0.25.2
+
 # --- Vector DB (faiss wheel compatible with py3.10/py3.11)
 faiss-cpu==1.13.0
 
