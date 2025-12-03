@@ -69,7 +69,8 @@ def load_endpoint(repo_id: str, token: str):
     st.write("token present?", bool(token))
     return HuggingFaceEndpoint(
         repo_id=repo_id,                       # explicit
-        task="text-generation",                # or "conversational" if model supports it
+        #task="text-generation",   
+        task="conversational" # or "conversational" if model supports it
         huggingfacehub_api_token=token,
         temperature=0.2,
         max_new_tokens=512,
