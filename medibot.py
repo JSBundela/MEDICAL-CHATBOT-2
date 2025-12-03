@@ -3,9 +3,9 @@ import streamlit as st
 from langchain_huggingface import HuggingFaceEmbeddings, HuggingFaceEndpoint
 from langchain_huggingface import ChatHuggingFace
 #from langchain.chains.retrieval_qa.base import RetrievalQA
-from langchain.chains.retrieval import create_retrieval_chain
+#from langchain.chains.retrieval import create_retrieval_chain
 
-#from langchain.chains import RetrievalQA
+from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import PromptTemplate
 HF_TOKEN = st.secrets.get("HF_TOKEN") 
@@ -122,8 +122,8 @@ with st.sidebar:
                 # 2️⃣  Build QA chain
 
                 vectorstore = get_vectorstore()
-                qa_chain = create_retrieval_chain(
-                #qa_chain = RetrievalQA.from_chain_type(
+                #qa_chain = create_retrieval_chain(
+                qa_chain = RetrievalQA.from_chain_type(
                     llm=load_llm(HUGGINGFACE_REPO_ID, HF_TOKEN),
                     chain_type="stuff",
                     retriever=vectorstore.as_retriever(search_kwargs={"k": 4}),
