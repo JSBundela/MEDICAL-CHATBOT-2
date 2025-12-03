@@ -2,13 +2,12 @@ import os
 import streamlit as st
 from langchain_huggingface import HuggingFaceEmbeddings, HuggingFaceEndpoint
 from langchain_huggingface import ChatHuggingFace
-#from langchain.chains.retrieval_qa.base import RetrievalQA
-#from langchain.chains.retrieval import create_retrieval_chain
-
 from langchain.chains import RetrievalQA
+from langchain.chains.retrieval_qa.base import RetrievalQA
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import PromptTemplate
-HF_TOKEN = st.secrets.get("HF_TOKEN") 
+
+HF_TOKEN = st.secrets["HF_TOKEN"]
 
 
 
@@ -16,11 +15,7 @@ HF_TOKEN = st.secrets.get("HF_TOKEN")
 # Configuration
 # ----------------------------
 DB_FAISS_PATH = "vectorstore/db_faiss"
-#HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
-#tiiuae/falcon-7b-instruct
-#meta-llama/Llama-2-7b-chat-hf
-
-HUGGINGFACE_REPO_ID ="mistralai/Mistral-Large-3-675B-Instruct-2512"
+HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
 #HUGGINGFACE_REPO_ID ="tiiuae/falcon-7b-instruct"
 #HUGGINGFACE_REPO_ID ="meta-llama/Llama-2-7b-chat-hf"
 
@@ -29,11 +24,6 @@ HUGGINGFACE_REPO_ID ="mistralai/Mistral-Large-3-675B-Instruct-2512"
 # ----------------------------
 # Helper Functions
 # ----------------------------
-st.write("HF_TOKEN present?", bool(HF_TOKEN))
-st.write("HUGGINGFACE_REPO_ID:", HUGGINGFACE_REPO_ID)
-
-
-
 
 def get_vectorstore():
     """Load the FAISS vector store with the sentence‑transformer embedding model."""
@@ -42,7 +32,7 @@ def get_vectorstore():
     db = FAISS.load_local(DB_FAISS_PATH, embedding_model, allow_dangerous_deserialization=True)
     return db
 
-'''def load_endpoint(repo_id: str, token: str):
+def load_endpoint(repo_id: str, token: str):
     """Return a HuggingFace endpoint with sensible defaults."""
     from langchain_huggingface import HuggingFaceEndpoint 
     return HuggingFaceEndpoint(
@@ -64,42 +54,6 @@ def load_llm(repo_id: str, token: str):
     return ChatHuggingFace(
         llm=endpoint  # ⚠️ pass the endpoint here
     )
-'''
-from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
-
-'''def load_endpoint(repo_id: str, token: str):
-    st.write("load_endpoint called with repo_id:", repo_id)
-    st.write("token present?", bool(token))
-    return HuggingFaceEndpoint(
-        repo_id=repo_id,                       # explicit
-        task="text-generation",   
-        #task="conversational", # or "conversational" if model supports it
-        huggingfacehub_api_token=token,
-        temperature=0.2,
-        max_new_tokens=512,
-        return_full_text=False                  # <- explicit, not inside model_kwargs
-    )'''
-
-#def load_llm(repo_id: str, token: str):
-    #endpoint = load_endpoint(repo_id, token)
-    #return ChatHuggingFace(llm=endpoint)
-#from langchain import HuggingFaceHub
-from langchain_community.llms import HuggingFaceHub
-
-
-def load_llm(repo_id: str, token: str):
-    """
-    Return a LangChain-compatible HuggingFaceHub LLM wrapper.
-    This MUST be a LangChain LLM wrapper (not raw huggingface clients).
-    """
-    return HuggingFaceHub(
-        repo_id=repo_id,
-        huggingfacehub_api_token=token,
-        task="text-generation",               # explicit task to avoid validation errors
-        model_kwargs={"temperature": 0.2, "max_new_tokens": 512},
-    )
-
-
 
 def build_prompt() -> PromptTemplate:
     template = (
@@ -143,12 +97,8 @@ with st.sidebar:
                 # 2️⃣  Build QA chain
 
                 vectorstore = get_vectorstore()
-                #qa_chain = create_retrieval_chain(
-                llm_obj = load_llm(HUGGINGFACE_REPO_ID, HF_TOKEN)
                 qa_chain = RetrievalQA.from_chain_type(
-                    llm=llm_obj,
-                #qa_chain = RetrievalQA.from_chain_type(
-                    #llm=load_llm(HUGGINGFACE_REPO_ID, HF_TOKEN),
+                    llm=load_llm(HUGGINGFACE_REPO_ID, HF_TOKEN),
                     chain_type="stuff",
                     retriever=vectorstore.as_retriever(search_kwargs={"k": 4}),
                     return_source_documents=True,
@@ -156,7 +106,7 @@ with st.sidebar:
                 )
 
                 # 3️⃣  Run chain
-            
+
                 resp = qa_chain.invoke({"query": user_input})
                 answer = resp.get("result", "")
                 docs = resp.get("source_documents", [])
