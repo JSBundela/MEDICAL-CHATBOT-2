@@ -1,4 +1,4 @@
-streamlit==1.31.1
+"""streamlit==1.31.1
 
 langchain
 langchain-core
@@ -8,5 +8,28 @@ faiss-cpu
 pypdf
 transformers
 tf-keras  # compatibility shim for Keras 3
-sentence-transformers
+sentence-transformers"""
 
+# Streamlit app
+streamlit==1.31.1
+
+# LangChain + Hugging Face integration (compatible set)
+langchain==0.3.28
+langchain-huggingface==0.1.2
+
+# (optional) langchain-community helpers — loosened to allow resolver flexibility
+langchain-community>=0.3.0
+
+# Vector DB (CPU)
+faiss-cpu==1.13.0
+
+# Embeddings & Transformers
+sentence-transformers==2.6.1
+transformers==4.40.2
+huggingface_hub>=0.23.0
+
+# PDF utilities
+pypdf==4.2.0
+
+# Utilities
+requests==2.32.3
