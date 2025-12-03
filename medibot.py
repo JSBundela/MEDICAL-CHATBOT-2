@@ -2,7 +2,8 @@ import os
 import streamlit as st
 from langchain_huggingface import HuggingFaceEmbeddings, HuggingFaceEndpoint
 from langchain_huggingface import ChatHuggingFace
-from langchain.chains.retrieval_qa.base import RetrievalQA
+#from langchain.chains.retrieval_qa.base import RetrievalQA
+from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import PromptTemplate
 
