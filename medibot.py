@@ -38,7 +38,7 @@ def get_vectorstore():
     db = FAISS.load_local(DB_FAISS_PATH, embedding_model, allow_dangerous_deserialization=True)
     return db
 
-"""def load_endpoint(repo_id: str, token: str):
+'''def load_endpoint(repo_id: str, token: str):
     """Return a HuggingFace endpoint with sensible defaults."""
     from langchain_huggingface import HuggingFaceEndpoint 
     return HuggingFaceEndpoint(
