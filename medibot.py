@@ -8,7 +8,7 @@ from langchain.chains.retrieval import create_retrieval_chain
 #from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import PromptTemplate
-HF_TOKEN = st.secrets.get("HF_TOKEN") or os.environ.get("HF_TOKEN")
+HF_TOKEN = st.secrets.get("HF_TOKEN") 
 
 
 
