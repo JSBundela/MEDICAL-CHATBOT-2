@@ -1,11 +1,36 @@
+#streamlit==1.31.1
+
+#langchain
+#langchain-core
+#langchain-community
+#langchain-huggingface
+#faiss-cpu
+#pypdf
+#transformers
+#tf-keras  # compatibility shim for Keras 3
+#sentence-transformers
+# --- Core Framework ---
 streamlit==1.31.1
 
-langchain
-langchain-core
-langchain-community
-langchain-huggingface
-faiss-cpu
-pypdf
-transformers
-tf-keras  # compatibility shim for Keras 3
-sentence-transformers
+# --- LangChain Core Packages (compatible set) ---
+langchain==0.2.12
+langchain-core==0.2.26
+langchain-community==0.2.10
+langchain-huggingface==0.1.2
+
+# --- Vector Store ---
+faiss-cpu==1.7.4
+
+# --- Embeddings / Transformers ---
+sentence-transformers==2.6.1
+transformers==4.40.2
+huggingface_hub==0.23.0
+
+# --- PDF & Utilities ---
+pypdf==4.2.0
+
+# --- Keras / TensorFlow Compatibility Layer ---
+tf-keras==0.1.0
+
+# --- For LLM Endpoints ---
+requests==2.32.3
