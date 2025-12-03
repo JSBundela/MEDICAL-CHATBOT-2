@@ -10,6 +10,33 @@ from langchain_core.prompts import PromptTemplate
 HF_TOKEN = st.secrets["HF_TOKEN"]
 
 
+import streamlit as st, sys, traceback
+st.write("sys.executable:", sys.executable)
+try:
+    import torch
+    st.write("torch import OK")
+    st.write("torch.__version__:", getattr(torch, "__version__", None))
+    st.write("torch.__file__:", getattr(torch, "__file__", None))
+    try:
+        st.write("torch.version.cuda:", torch.version.cuda)
+    except Exception as ex:
+        st.write("couldn't get torch.version.cuda:", ex)
+    try:
+        st.write("torch.cuda.is_available():", torch.cuda.is_available())
+    except Exception as ex:
+        st.write("couldn't query torch.cuda.is_available():", ex)
+except Exception:
+    st.error("torch import FAILED — traceback below")
+    st.code(traceback.format_exc())
+
+try:
+    import sentence_transformers as s
+    st.write("sentence_transformers import OK:", getattr(s, "__file__", None))
+except Exception:
+    st.error("sentence_transformers import FAILED — traceback below")
+    st.code(traceback.format_exc())
+
+
 
 # ----------------------------
 # Configuration
