@@ -144,8 +144,11 @@ with st.sidebar:
 
                 vectorstore = get_vectorstore()
                 #qa_chain = create_retrieval_chain(
+                llm_obj = load_llm(HUGGINGFACE_REPO_ID, HF_TOKEN)
                 qa_chain = RetrievalQA.from_chain_type(
-                    llm=load_llm(HUGGINGFACE_REPO_ID, HF_TOKEN),
+                    llm=llm_obj,
+                #qa_chain = RetrievalQA.from_chain_type(
+                    #llm=load_llm(HUGGINGFACE_REPO_ID, HF_TOKEN),
                     chain_type="stuff",
                     retriever=vectorstore.as_retriever(search_kwargs={"k": 4}),
                     return_source_documents=True,
