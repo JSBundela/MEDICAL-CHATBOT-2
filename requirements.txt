@@ -1,36 +1,14 @@
 #streamlit==1.31.1
 
-#langchain
-#langchain-core
-#langchain-community
-#langchain-huggingface
-#faiss-cpu
-#pypdf
-#transformers
-#tf-keras  # compatibility shim for Keras 3
-#sentence-transformers
+langchain
+langchain-core
+langchain-community
+langchain-huggingface
+faiss-cpu
+pypdf
+transformers
+tf-keras  # compatibility shim for Keras 3
+sentence-transformers
 
-# App
-streamlit==1.31.1
 
-# LangChain + HuggingFace integration (compatible)
-langchain==0.3.27
-langchain-huggingface==0.1.2
-# let pip pick a compatible langchain-core / langchain-community:
-langchain-community>=0.3.0
-
-# Vector DB (CPU)
-faiss-cpu==1.13.0
-
-# Embeddings & Transformers
-sentence-transformers==2.6.1
-sentencepiece
-transformers==4.40.2
-huggingface_hub>=0.23.0
-
-# PDF utilities
-pypdf==4.2.0
-
-# Utilities
-requests==2.32.3
 
