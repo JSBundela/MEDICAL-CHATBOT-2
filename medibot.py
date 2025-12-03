@@ -25,6 +25,8 @@ HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
 # ----------------------------
 # Helper Functions
 # ----------------------------
+st.write("HF_TOKEN present?", bool(HF_TOKEN))
+st.write("HUGGINGFACE_REPO_ID:", HUGGINGFACE_REPO_ID)
 
 def get_vectorstore():
     """Load the FAISS vector store with the sentence‑transformer embedding model."""
